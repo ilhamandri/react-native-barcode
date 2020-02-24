@@ -11,6 +11,28 @@ import styles from './src/assets/styles';
 import QRCode from 'react-native-qrcode-svg';
 
 class BarcodeGenerator extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: 'https://facebook.github.io/react-native/'};
+  }
+
+  componentDidMount() {
+    this.change = setInterval(() => {
+      this.changeQR();
+    }, 5000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.change);
+  }
+
+  /* Method untuk mengganti QR code berdasarkan value */
+  changeQR() {
+    this.setState({
+      value: 'https://reactjs.org/',
+    });
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
@@ -28,9 +50,8 @@ class BarcodeGenerator extends Component {
           <View style={styles.barcodeContainer}>
             <QRCode
               size={250}
-              value="http://awesome.link.qr"
+              value={this.state.value}
               logo={require('./src/assets/images/logounpar.png')}
-              enableLinearGradient="true"
             />
           </View>
         </View>
