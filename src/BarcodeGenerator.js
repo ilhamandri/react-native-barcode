@@ -47,7 +47,7 @@ class BarcodeGenerator extends Component {
 
     const {data, token: newToken} = await fetchData(
       'POST',
-      'http://192.168.0.112/web-absensi/get_qr.php',
+      'http://192.168.0.103/web-absensi/get_qr.php',
       qrData,
     );
     // console.log(qrData);
@@ -74,16 +74,16 @@ class BarcodeGenerator extends Component {
 
     return (
       <View style={{flex: 1}}>
-        <View style={styles.topContainer}>
+        <View style={styles.container.topContainer}>
           <Image
             source={require('./assets/images/logounpar.png')}
             style={styles.image}
           />
-          <Text style={styles.text}>{kodeMK}</Text>
-          <Text style={styles.matkulText}>{namaMK}</Text>
+          <Text style={styles.text.text}>{kodeMK}</Text>
+          <Text style={styles.text.matkulText}>{namaMK}</Text>
         </View>
-        <View style={styles.mainContainer}>
-          <View style={styles.barcodeContainer}>
+        <View style={styles.container.mainContainer}>
+          <View style={styles.container.barcodeContainer}>
             <QRCode
               size={250}
               value={token}
@@ -91,9 +91,9 @@ class BarcodeGenerator extends Component {
             />
           </View>
         </View>
-        <View style={styles.bottomContainer}>
-          <Text style={styles.text}>{namaRuang}</Text>
-          <Text style={styles.text}>17 Juli 2018</Text>
+        <View style={styles.container.bottomContainer}>
+          <Text style={styles.text.text}>{namaRuang}</Text>
+          <Text style={styles.text.text}>17 Juli 2018</Text>
         </View>
       </View>
     );
@@ -101,42 +101,46 @@ class BarcodeGenerator extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    topContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    mainContainer: {
+      flex: 2,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    bottomContainer: {
+      flex: 0.5,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    barcodeContainer: {
+      backgroundColor: 'grey',
+      height: 250,
+      width: 250,
+    },
+  },
   image: {
     height: 70,
     width: 70,
     marginBottom: 5,
   },
   text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    paddingVertical: 5,
-  },
-  matkulText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingVertical: 5,
-    marginHorizontal: 5,
-  },
-  topContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  mainContainer: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomContainer: {
-    flex: 0.5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  barcodeContainer: {
-    backgroundColor: 'grey',
-    height: 250,
-    width: 250,
+    text: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      paddingVertical: 5,
+    },
+    matkulText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      paddingVertical: 5,
+      marginHorizontal: 5,
+    },
   },
 });
 
