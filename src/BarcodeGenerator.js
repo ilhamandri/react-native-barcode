@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+
 import {fetchData} from '../src/helper';
+import Connection from './Connection';
 
 class BarcodeGenerator extends Component {
   constructor(props) {
@@ -39,7 +41,7 @@ class BarcodeGenerator extends Component {
 
     const {data, token: newToken} = await fetchData(
       'POST',
-      'http://192.168.0.103/web-absensi/get_qr.php',
+      Connection.host + 'get_qr.php',
       qrData,
     );
     // console.log(qrData);
