@@ -1,13 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
 import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-// import styles from './src/assets/styles';
 import QRCode from 'react-native-qrcode-svg';
 import {fetchData} from '../src/helper';
 
@@ -74,7 +66,7 @@ class BarcodeGenerator extends Component {
 
     return (
       <View style={{flex: 1}}>
-        <View style={styles.container.topContainer}>
+        <View style={styles.container.top}>
           <Image
             source={require('./assets/images/logounpar.png')}
             style={styles.image}
@@ -82,8 +74,8 @@ class BarcodeGenerator extends Component {
           <Text style={styles.text.text}>{kodeMK}</Text>
           <Text style={styles.text.matkulText}>{namaMK}</Text>
         </View>
-        <View style={styles.container.mainContainer}>
-          <View style={styles.container.barcodeContainer}>
+        <View style={styles.container.main}>
+          <View style={styles.container.barcode}>
             <QRCode
               size={250}
               value={token}
@@ -91,7 +83,7 @@ class BarcodeGenerator extends Component {
             />
           </View>
         </View>
-        <View style={styles.container.bottomContainer}>
+        <View style={styles.container.bottom}>
           <Text style={styles.text.text}>{namaRuang}</Text>
           <Text style={styles.text.text}>17 Juli 2018</Text>
         </View>
@@ -100,24 +92,24 @@ class BarcodeGenerator extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
-    topContainer: {
+    top: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
     },
-    mainContainer: {
+    main: {
       flex: 2,
       justifyContent: 'center',
       alignItems: 'center',
     },
-    bottomContainer: {
+    bottom: {
       flex: 0.5,
       justifyContent: 'center',
       alignItems: 'center',
     },
-    barcodeContainer: {
+    barcode: {
       backgroundColor: 'grey',
       height: 250,
       width: 250,
@@ -142,6 +134,6 @@ const styles = StyleSheet.create({
       marginHorizontal: 5,
     },
   },
-});
+};
 
 export default BarcodeGenerator;
