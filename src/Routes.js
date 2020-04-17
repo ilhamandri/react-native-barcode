@@ -3,8 +3,8 @@ import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import BarcodeGenerator from './BarcodeGenerator';
-import Room from './Room';
+import BarcodeGenerator from './pages/BarcodeGenerator';
+import Room from './pages/Room';
 
 const ScreenStack = createStackNavigator();
 

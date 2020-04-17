@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
-import {fetchData} from '../src/helper';
-import Connection from './Connection';
+import {fetchData} from './../helper';
+import Connection from './../Connection';
 
 class BarcodeGenerator extends Component {
   constructor(props) {
