@@ -1,30 +1,73 @@
 import React, {Component} from 'react';
-import {View, Text, Button, TouchableOpacity, Picker} from 'react-native';
+import {View, Text, Button, TouchableOpacity} from 'react-native';
+import {Picker} from '@react-native-community/picker';
+
+import {fetchData} from './../helper';
+import Connection from './../Connection';
 
 class Room extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      ruang: [],
+      idRuang: '',
+    };
   }
 
+  componentDidMount = async () => {
+    this.getDaftarRuang();
+  };
+
   onPress = () => {
-    this.props.navigation.replace('BarcodeGenerator');
+    const {idRuang} = this.state;
+    this.props.navigation.replace('BarcodeGenerator', {id_ruang: idRuang});
+  };
+
+  // function untuk mendapatkan daftar ruangan
+  getDaftarRuang = async () => {
+    const daftarRuang = await fetchData(
+      'GET',
+      Connection.host + 'get_ruang.php',
+    );
+    this.setState({ruang: daftarRuang.ruang});
+    console.log('Ruang : ', this.state.ruang);
+  };
+
+  // function untuk dropdown item
+  pickerItem = () => {
+    const {ruang} = this.state;
+    return ruang.map(data => (
+      <Picker.Item key={data.id} label={data.nama} value={data.id} />
+    ));
+  };
+
+  // perubahan label dropdown
+  onValueChange = (item, index) => {
+    this.setState({idRuang: item});
+    console.log('item :', item);
+    console.log('index:', index);
   };
 
   render() {
+    const {idRuang} = this.state;
     return (
       <View style={styles.container.main}>
         <Text style={styles.text.title}> Silahkan Pilih Ruang </Text>
         <View style={styles.container.content}>
-          <Picker selectedValue="Java" style={styles.picker}>
-            <Picker.Item label="java" value="Java" />
-            <Picker.Item label="JavaScript" value="Java" />
+          <Picker
+            selectedValue={idRuang}
+            mode="dropdown"
+            style={styles.picker}
+            onValueChange={this.onValueChange}>
+            {this.pickerItem()}
           </Picker>
         </View>
 
         <TouchableOpacity style={styles.button} onPress={() => this.onPress()}>
           <Text style={styles.text.btnText}>BANGKITKAN KODE QR</Text>
         </TouchableOpacity>
+
+        {/* <Button title="GET RUANG" onPress={this.getDaftarRuang} /> */}
       </View>
     );
   }
@@ -40,8 +83,8 @@ const styles = {
     content: {
       alignItems: 'center',
       borderWidth: 1,
-      width: '80%',
-      height: 80,
+      width: '60%',
+      height: 50,
     },
   },
   button: {
