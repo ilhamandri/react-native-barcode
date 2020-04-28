@@ -14,9 +14,6 @@ class BarcodeGenerator extends Component {
       kodeMK: 'Kode Mata Kuliah',
       tanggal: '',
       token: 'ilham',
-      id_ruang: '1',
-      value: 'https://facebook.github.io/react-native/',
-      isScanned: false,
     };
 
     this.interval = null;
@@ -26,7 +23,6 @@ class BarcodeGenerator extends Component {
     this.interval = setInterval(() => {
       this.getKodeQR();
     }, 1000);
-    // setInterval(this.getKodeQR(), 5000);
   };
 
   componentWillUnmount = () => {
@@ -36,30 +32,32 @@ class BarcodeGenerator extends Component {
   };
 
   getKodeQR = async () => {
-    const {token, id_ruang} = this.state;
+    const {route} = this.props;
+    const {token} = this.state;
+    const {id_ruang} = route.params;
     const qrData = {token, id_ruang};
+    console.log('qrData : ', qrData);
 
-    const {data, token: newToken} = await fetchData(
+    const {data, token: newToken, STATUS_CODE} = await fetchData(
       'POST',
       Connection.host + 'get_qr.php',
       qrData,
     );
-    // console.log(qrData);
-    // console.log(data);
-    const dataLength = Array.isArray(data)
-      ? data.length
-      : Object.keys(data).length;
-    // this.setState({panjangJson});
-    if (dataLength) {
-      console.log('data', data);
-      console.log('token', newToken);
-      this.setState({
-        namaRuang: data.ruang,
-        kodeMK: data.kode,
-        namaMK: data.nama,
-        token: newToken,
-      });
-      // console.log(dataLength);
+
+    if (STATUS_CODE === 'OK') {
+      const dataLength = Array.isArray(data)
+        ? data.length
+        : Object.keys(data).length;
+      if (dataLength) {
+        this.setState({
+          namaRuang: data.ruang,
+          kodeMK: data.kode,
+          namaMK: data.nama,
+          token: newToken,
+        });
+      }
+    } else {
+      console.error('[Error 400]');
     }
   };
 
@@ -70,7 +68,7 @@ class BarcodeGenerator extends Component {
       <View style={{flex: 1}}>
         <View style={styles.container.top}>
           <Image
-            source={require('./assets/images/logounpar.png')}
+            source={require('./../assets/images/logounpar.png')}
             style={styles.image}
           />
           <Text style={styles.text.text}>{kodeMK}</Text>
@@ -81,13 +79,13 @@ class BarcodeGenerator extends Component {
             <QRCode
               size={250}
               value={token}
-              logo={require('./assets/images/logounpar.png')}
+              logo={require('./../assets/images/logounpar.png')}
             />
           </View>
         </View>
         <View style={styles.container.bottom}>
           <Text style={styles.text.text}>{namaRuang}</Text>
-          <Text style={styles.text.text}>17 Juli 2018</Text>
+          {/* <Text style={styles.text.text}>17 Juli 2018</Text> */}
         </View>
       </View>
     );
