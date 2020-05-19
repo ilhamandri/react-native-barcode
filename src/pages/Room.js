@@ -18,6 +18,7 @@ class Room extends Component {
     this.getDaftarRuang();
   };
 
+  // event untuk bangkitkan barcode
   onPress = () => {
     const {idRuang} = this.state;
     this.props.navigation.replace('BarcodeGenerator', {id_ruang: idRuang});

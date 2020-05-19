@@ -13,7 +13,7 @@ class BarcodeGenerator extends Component {
       namaRuang: 'Nama Ruangan',
       kodeMK: 'Kode Mata Kuliah',
       tanggal: '',
-      token: 'ilham',
+      token: '412e73cc6bb5eef658db36e50d1f547e',
     };
 
     this.interval = null;
@@ -31,6 +31,7 @@ class BarcodeGenerator extends Component {
     }
   };
 
+  // untuk membangkitkan kode qr
   getKodeQR = async () => {
     const {route} = this.props;
     const {token} = this.state;
