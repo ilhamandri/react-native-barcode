@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Alert} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
 import {fetchData} from './../helper';
@@ -44,6 +44,7 @@ class BarcodeGenerator extends Component {
       Connection.host + 'get_qr.php',
       qrData,
     );
+    console.log(STATUS_CODE);
 
     if (STATUS_CODE === 'OK') {
       const dataLength = Array.isArray(data)
@@ -57,8 +58,6 @@ class BarcodeGenerator extends Component {
           token: newToken,
         });
       }
-    } else {
-      console.error('[Error 400]');
     }
   };
 
